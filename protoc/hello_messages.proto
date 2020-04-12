@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package hello_messages;
+option go_package = "server/src/generated/messages";
+
+import "enums.proto";
+
+message HelloRequest {}
+message HelloReply {
+  bool status = 1;
+  enums.StatusCodes status_code = 2;
+  string text = 3;
+}

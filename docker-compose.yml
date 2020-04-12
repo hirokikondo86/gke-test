@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  server:
+    container_name: "ecs-test-server"
+    build:
+      context: ./
+      dockerfile: ./docker/golang/Dockerfile
+    volumes:
+      - ./server:/go/src/server
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+    tty: true
+
+  proxy:
+    container_name: "ecs-test-envoy"
+    build:
+      context: ./
+      dockerfile: ./docker/envoy/Dockerfile
+    volumes:
+      - ./docker/envoy:/envoy
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    links:
+      - "server"
+    tty: true

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package hello_services;
+option go_package = "server/src/generated/services";
+
+import "hello_messages.proto";
+
+service HelloServices {
+  rpc Hello(hello_messages.HelloRequest) returns (hello_messages.HelloReply) {}
+}
