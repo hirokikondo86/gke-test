@@ -10,6 +10,10 @@ protoc-doc:
 	--doc_out=./protoc/doc \
 	--doc_opt=html,index.html:./protoc protoc/*.proto
 
+# yarn start
+yarn-start:
+	cd client && yarn start
+
 # realize start
 start-server:
 	docker exec -it ecs-test-server bash -c "realize start"

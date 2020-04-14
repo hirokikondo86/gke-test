@@ -1,0 +1,11 @@
+FROM golang:1.13.4 AS builder
+RUN mkdir /go/src/server
+WORKDIR /go/src/server
+COPY ./server .
+RUN cd src && \
+    GOARCH=amd64 CGO_ENABLED=0 GOOS=linux go build -o ../bin/main
+
+FROM scratch
+COPY --from=builder /go/src/server/bin/main .
+ENTRYPOINT ["./main"]
+EXPOSE 9000

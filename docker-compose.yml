@@ -5,7 +5,7 @@ services:
     container_name: "ecs-test-server"
     build:
       context: ./
-      dockerfile: ./docker/golang/Dockerfile
+      dockerfile: ./docker/golang/Dockerfile.dev
     volumes:
       - ./server:/go/src/server
     expose:
@@ -18,7 +18,7 @@ services:
     container_name: "ecs-test-envoy"
     build:
       context: ./
-      dockerfile: ./docker/envoy/Dockerfile
+      dockerfile: ./docker/envoy/Dockerfile.dev
     volumes:
       - ./docker/envoy:/envoy
     expose:
