@@ -1,7 +1,7 @@
 FROM  envoyproxy/envoy:v1.12.2
 
 WORKDIR /envoy
-COPY ./docker/envoy/envoy.prod.yaml .
-CMD /usr/local/bin/envoy -c /envoy/envoy.prod.yaml
+COPY ./docker/envoy/sidecar-service.yaml .
+CMD /usr/local/bin/envoy -c /etc/envoy/sidecar-service.yaml
 
 EXPOSE 80

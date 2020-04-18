@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+  labels:
+    app: user-service
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      volumes:
+        - name: sidecar-service-config
+          configMap:
+            name: sidecar-service
+      containers:
+        - name: golang # golang
+          resources:
+            requests:
+              cpu: 50m
+              memory: 10Mi
+            limits:
+              cpu: "1"
+              memory: 20Mi
+          image: khiroki86/eks-test:golang-v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9000
+              name: golang-service
+        - name: envoy # envoy sidecar
+          resources:
+            requests:
+              cpu: 50m
+              memory: 10Mi
+            limits:
+              cpu: "1"
+              memory: 20Mi
+          image: envoyproxy/envoy:v1.12.2
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: sidecar-service-config
+              mountPath: /etc/envoy
+          command:
+            - "/usr/local/bin/envoy"
+          args:
+            - "--config-path /etc/envoy/sidecar-service.yaml"
+          ports:
+            - containerPort: 8080
+              name: envoy-sidecar
+            - containerPort: 9901
+              name: envoy-admin

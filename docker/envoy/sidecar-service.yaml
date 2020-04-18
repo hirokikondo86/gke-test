@@ -2,11 +2,10 @@ admin:
   access_log_path: /tmp/admin_access.log
   address:
     socket_address: { address: 0.0.0.0, port_value: 9901 }
-
 static_resources:
   listeners:
     - address:
-        socket_address: { address: 0.0.0.0, port_value: 80 }
+        socket_address: { address: 0.0.0.0, port_value: 8080 }
       filter_chains:
         - filters:
             - name: envoy.http_connection_manager
@@ -16,12 +15,12 @@ static_resources:
                 route_config:
                   name: local_route
                   virtual_hosts:
-                    - name: local_service
+                    - name: service
                       domains: ["*"]
                       routes:
                         - match: { prefix: "/" }
                           route:
-                            cluster: go
+                            cluster: golang_service
                             max_grpc_timeout: 0s
                       cors:
                         allow_origin:
@@ -34,15 +33,14 @@ static_resources:
                   - name: envoy.grpc_web
                   - name: envoy.cors
                   - name: envoy.router
-
   clusters:
-    - name: go
+    - name: golang_service
       connect_timeout: 0.25s
-      type: logical_dns
+      type: static
       http2_protocol_options: {}
       upstream_connection_options:
         tcp_keepalive:
           keepalive_time: 300
       lb_policy: round_robin
       # win/mac hosts: Use address: host.docker.internal instead of address: localhost in the line below
-      hosts: [{ socket_address: { address: server, port_value: 9000 } }]
+      hosts: [{ socket_address: { address: 127.0.0.1, port_value: 9000 } }]

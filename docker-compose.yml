@@ -2,7 +2,7 @@ version: "3"
 
 services:
   server:
-    container_name: "ecs-test-server"
+    container_name: "eks-test-server"
     build:
       context: ./
       dockerfile: ./docker/golang/Dockerfile.dev
@@ -15,7 +15,7 @@ services:
     tty: true
 
   proxy:
-    container_name: "ecs-test-envoy"
+    container_name: "eks-test-envoy"
     build:
       context: ./
       dockerfile: ./docker/envoy/Dockerfile.dev

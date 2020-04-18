@@ -1,3 +1,4 @@
+# some protoc
 protoc-client:
 	sh ./script/protoc.sh
 	sh ./script/disable.sh
@@ -16,10 +17,10 @@ yarn-start:
 
 # realize start
 start-server:
-	docker exec -it ecs-test-server bash -c "realize start"
+	docker exec -it eks-test-server bash -c "realize start"
 # go build
 build-server:
-	docker exec -it ecs-test-server bash -c "CGO_ENABLED=0 &&\
+	docker exec -it eks-test-server bash -c "CGO_ENABLED=0 &&\
 	GOOS=linux &&\
 	GOARCH=amd64 &&\
 	cd src &&\
@@ -27,7 +28,16 @@ build-server:
 
 # dep init
 dep-init:
-	docker exec -it ecs-test-server dep init
+	docker exec -it eks-test-server dep init
 # dep ensure
 dep-ensure:
-	docker exec -it ecs-test-server dep ensure
+	docker exec -it eks-test-server dep ensure
+
+# apply deployment
+apply-dep:
+	kubectl apply -f ./k8s/lb-dep.yml && \
+	kubectl apply -f ./k8s/user-dep.yml
+# apply service
+apply-svc:
+	kubectl apply -f ./k8s/lb-svc.yml && \
+	kubectl apply -f ./k8s/user-svc.yml

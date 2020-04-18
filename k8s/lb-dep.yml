@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lb-deployment
+spec:
+  selector:
+    matchLabels:
+      app: envoy-lb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: envoy-lb
+    spec:
+      # restartPolicy: OnFailure
+      volumes:
+        - name: load-balancer-config
+          configMap:
+            name: load-balancer
+      containers:
+        - name: envoy
+          resources:
+            requests:
+              cpu: 50m
+              memory: 10Mi
+            limits:
+              cpu: "1"
+              memory: 20Mi
+          image: envoyproxy/envoy:v1.12.2
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: load-balancer-config
+              mountPath: /etc/envoy
+          command:
+            - "/usr/local/bin/envoy"
+          args:
+            - "--config-path /etc/envoy/load-balancer.yaml"
+          ports:
+            - containerPort: 80
+              name: envoy-lb
+            - containerPort: 10001
+              name: envoy-admin
