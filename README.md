@@ -1,3 +1,3 @@
-# eks-tes
+# eks-test
 # 概要
-eksとenvoyを使用してgrpcサーバーの負荷分散。
+eksとenvoyを使用してgrpcサーバーを負荷分散してみた。
