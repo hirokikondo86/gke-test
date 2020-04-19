@@ -7,7 +7,7 @@ const Button: FC = () => {
   const [text, setText] = useState('');
 
   function handleHello() {
-    const client = new HelloServicesClient('http://192.168.64.2:30619', {});
+    const client = new HelloServicesClient('http://34.85.40.127:30000', {});
     const req = new HelloRequest();
 
     const meta = new grpc.Metadata();
@@ -25,7 +25,6 @@ const Button: FC = () => {
 
   return (
     <>
-      <h1>EKS TEST</h1>
       <p>
         <button onClick={handleHello}>ON</button>
       </p>
