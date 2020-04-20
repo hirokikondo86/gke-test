@@ -7,7 +7,8 @@ const Button: FC = () => {
   const [text, setText] = useState('');
 
   function handleHello() {
-    const client = new HelloServicesClient('http://34.85.40.127:30000', {});
+    const client = new HelloServicesClient('http://35.200.123.198', {});
+
     const req = new HelloRequest();
 
     const meta = new grpc.Metadata();
