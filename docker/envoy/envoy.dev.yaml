@@ -45,9 +45,4 @@ static_resources:
           keepalive_time: 300
       lb_policy: round_robin
       # win/mac hosts: Use address: host.docker.internal instead of address: localhost in the line below
-      hosts:
-        [
-          {
-            socket_address: { address: host.docker.internal, port_value: 9000 },
-          },
-        ]
+      hosts: [{ socket_address: { address: server, port_value: 9000 } }]
