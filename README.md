@@ -1,3 +1,4 @@
-# eks-test
+gke-test
+
 # 概要
-gkeとenvoyを使用してgrpcサーバーを負荷分散してみた。
+ Load balancing the gRPC server using GKE and Envoy.
