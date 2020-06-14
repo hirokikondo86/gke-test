@@ -1,4 +1,3 @@
-gke-test
+# gke-test
 
-# 概要
- Load balancing the gRPC server using GKE and Envoy.
+Load balancing the gRPC server using GKE and Envoy.
